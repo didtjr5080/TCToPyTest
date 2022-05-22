@@ -5,7 +5,7 @@ import player_list
 import enemy
 
 # Charector_List =["드로즈2세","댐","드라지"]
-charactor=[]
+# charactor=[]
 # Skill_List=["검의 신판","강력한 의지","근력강화","분노의 일격"]
 # Drows_Damage_List = [100,0,0,150]
 # stats=[1,1,1,1,1000] #공격력, 주문력,방어력, 마법저항력, 체력
@@ -14,8 +14,8 @@ charactor=[]
 # Enemy_HP=1000
 test_enemy = enemy.enemy()
 
-Enumy_Skill_list=["응애","때리기"]
-Enumy_Skill_Damage=[0,1]
+# Enumy_Skill_list=["응애","때리기"]
+# Enumy_Skill_Damage=[0,1]
 
 player_c= None
 
@@ -71,13 +71,17 @@ def fight():
     #     Enemy_HP -= Drows_Damage_List[int(use_skill)-1]
     used_skill = select_Skill()
     print(player_c.get_skill_name(used_skill),"사용!")
-    Enemy_HP = test_enemy.sub_HP(player_c.get_skill_damage(used_skill))
+    # Enemy_HP = test_enemy.sub_HP(player_c.get_skill_damage(used_skill))
+    this_damage = player_c.get_skill_damage_array(used_skill)
+    Enemy_HP = test_enemy.take_damage(this_damage[0], this_damage[1], this_damage[2], this_damage[3])
     # Enemy_HP -= player_c.get_skill_damage(used_skill)
     
     time.sleep(0.5)
     
     enemy_used_skill = test_enemy.get_random_skill()
-    Player_HP = player_c.sub_HP(test_enemy.get_skill_damage(enemy_used_skill))
+    this_damage = test_enemy.get_skill_damage_array(enemy_used_skill)
+    Player_HP = player_c.take_damage(this_damage[0], this_damage[1], this_damage[2], this_damage[3])
+    # Player_HP = player_c.sub_HP(test_enemy.get_skill_damage(enemy_used_skill))
     # Player_HP -= test_enemy.get_skill_damage(enemy_used_skill)
     print("적이",test_enemy.get_skill_name(enemy_used_skill) , "사용!")
     time.sleep(0.5)
@@ -96,3 +100,4 @@ while player_c.get_HP() > 0 and test_enemy.get_HP() > 0:
     fight()
 
 print("End Game")
+
