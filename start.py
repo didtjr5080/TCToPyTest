@@ -133,6 +133,17 @@ while plyer_command_input != 0:
             print("Player Lose")
         elif test_enemy.get_HP() < 0:
             print("Player Lose")
+    else:
+        screen_clear()
+        print("올바른 값을 입력해주세요")
+        time.sleep(1)
+        screen_clear
+        print("0. 게임 종료")
+        print("1. 전투")
+        plyer_command_input = input("")
+        check_to_command = plyer_command_input.isdigit()
+        print(check_to_command) 
+        
 
 screen_clear()
 print("End Game")
