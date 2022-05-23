@@ -22,6 +22,15 @@ player_c= None
 E_use=""
 use_skill=""
 
+def screen_clear():
+    os.system("cls")  
+    try:
+        os.system("cls")
+    except:
+        os.system("clear")
+
+
+
 def Pick_To_Type():
     global player_c
     Charector_List = player_list.PlayerCharector.get_charetor_list()
@@ -29,7 +38,7 @@ def Pick_To_Type():
     for i in Charector_List:
         print(str(Charector_List.index(i)+1)+"."+i)
     star_type = input("원하시는 캐릭터 고르세요:")
-    os.system("cls")
+    screen_clear()
     print(Charector_List[(int(star_type))-1],"을 선택하셨습니다","\n","이대로 플레이 하시겠습니까?[y/n]")
     p_a = input("")
     
@@ -92,12 +101,50 @@ def fight():
     
 
 Pick_To_Type()
- 
-while player_c.get_HP() > 0 and test_enemy.get_HP() > 0:
-    os.system("cls")
-    print("플레이어 hp:",player_c.get_HP())
-    print("적 hp:", test_enemy.get_HP())
-    fight()
+print("0. 게임 종료")
+print("1. 전투")
+plyer_command_input = input("")
+check_to_command = plyer_command_input.isdigit()
+print(check_to_command)
 
+while plyer_command_input != 0:
+    if check_to_command:
+        plyer_command_input = int(plyer_command_input)
+    else:
+        while not check_to_command:
+            screen_clear()
+            print("올바른 값을 입력해주세요")
+            time.sleep(1)
+            screen_clear
+            print("0. 게임 종료")
+            print("1. 전투")
+            plyer_command_input = input("")
+            check_to_command = plyer_command_input.isdigit()
+            print(check_to_command) 
+        
+    
+    if plyer_command_input == 1:
+        while player_c.get_HP() > 0 and test_enemy.get_HP() > 0:
+            screen_clear()
+            print("플레이어 hp:",player_c.get_HP())
+            print("적 hp:", test_enemy.get_HP())
+            fight()
+        if player_c.get_HP() < 0:
+            print("Player Lose")
+        elif test_enemy.get_HP() < 0:
+            print("Player Lose")
+    else:
+        screen_clear()
+        print("올바른 값을 입력해주세요")
+        time.sleep(1)
+        screen_clear
+        print("0. 게임 종료")
+        print("1. 전투")
+        plyer_command_input = input("")
+        check_to_command = plyer_command_input.isdigit()
+        print(check_to_command) 
+        
+
+screen_clear()
 print("End Game")
 
