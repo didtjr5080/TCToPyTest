@@ -4,11 +4,11 @@ import player_list
 class enemy:
     attack = 5
     magic_power = 1
-    amor = 10
-    magic_amor = 10
+    amor = 1
+    magic_amor = 11
     enemy_hp=1000
-    Skill_basic_damage = [0, 100] #스킬 공격력 데미지 리스트
-    Skill_basic_magic_damage = [100, 0] #스킬 주문력 데미지 리스트
+    Skill_basic_damage = [0, 30] #스킬 공격력 데미지 리스트
+    Skill_basic_magic_damage = [30, 0] #스킬 주문력 데미지 리스트
     Skill_damage_per = [0, 0.2] #스킬 공격력 데미지 리스트 퍼센트
     Skill_magic_damage_per = [0.5, 0] #스킬 주문력 데미지 리스트 퍼센트
 

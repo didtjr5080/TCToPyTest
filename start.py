@@ -22,7 +22,7 @@ player_c= None
 E_use=""
 use_skill=""
 
-def screen_clear():
+def screen_clear(): #환경에 따라 화면 클리어 명령어
     os.system("cls")  
     try:
         os.system("cls")
@@ -32,24 +32,39 @@ def screen_clear():
 
 
 def Pick_To_Type():
+    screen_clear()
     global player_c
     Charector_List = player_list.PlayerCharector.get_charetor_list()
     
     for i in Charector_List:
         print(str(Charector_List.index(i)+1)+"."+i)
     star_type = input("원하시는 캐릭터 고르세요:")
-    screen_clear()
-    print(Charector_List[(int(star_type))-1],"을 선택하셨습니다","\n","이대로 플레이 하시겠습니까?[y/n]")
-    p_a = input("")
-    
-    if p_a == "y":
-        # charactor.append(Charector_List[(int(star_type))-1])
-        # if charactor[0] == "드로즈2세":
-        #     drows()
-        player_c = player_list.PlayerCharector((int(star_type))-1)
+    check_to_type = star_type.isdigit() #int인지 확인하는 함수 int면 true값 출력됨
+    #########################################오류 방지를 위한 입력값 검사코드#########################################
+    if check_to_type:
+        star_type= int(star_type)
+        if star_type > len(player_list.PlayerCharector.Charector_List):
+            screen_clear()
+            Pick_To_Type()
+        elif star_type <= 0:
+            screen_clear()
+            Pick_To_Type()
+        else:
+            screen_clear()
+            print(Charector_List[(int(star_type))-1],"을 선택하셨습니다","\n","이대로 플레이 하시겠습니까?[y/n]")
+            p_a = input("")
+        
+            if p_a == "y":
+                # charactor.append(Charector_List[(int(star_type))-1])
+                # if charactor[0] == "드로즈2세":
+                #     drows()
+                player_c = player_list.PlayerCharector((int(star_type))-1)
+            else:
+                Pick_To_Type()
     else:
+        screen_clear()
         Pick_To_Type()
-
+####################################################################################################################
 # def drows():
 #     global stats
 #     stats = [1,2,3,4,1000]
@@ -96,7 +111,15 @@ def fight():
     time.sleep(0.5)
     print("플레이어 hp:",Player_HP)
     print("적 hp:", Enemy_HP)
-    time.sleep(1)
+    # time.sleep(0.5)
+    # if player_c.get_HP() < 0:
+    #         print("Player win")
+    #         Enemy_HP = test_enemy.get_HP()
+    #         Player_HP = player_c.get_HP()
+    # elif test_enemy.get_HP() < 0:
+    #     print("Player Lose")
+    #     Enemy_HP = test_enemy.get_HP()
+    #     Player_HP = player_c.get_HP()
 
     
 
@@ -104,40 +127,49 @@ Pick_To_Type()
 print("0. 게임 종료")
 print("1. 전투")
 plyer_command_input = input("")
-check_to_command = plyer_command_input.isdigit()
+check_to_command = plyer_command_input.isdigit()#plyer_command_input값이 숫자 값인지 검사
 print(check_to_command)
 
-while plyer_command_input != 0:
-    if check_to_command:
+while plyer_command_input != 0:#입력값이 0이면 루프 끝남
+    if check_to_command:#plyer_command_input값이 숫자값이면 int로 변환
         plyer_command_input = int(plyer_command_input)
     else:
         while not check_to_command:
             screen_clear()
-            print("올바른 값을 입력해주세요")
             time.sleep(1)
             screen_clear
+            print("원하는 행동을 선택해주세요")
             print("0. 게임 종료")
             print("1. 전투")
             plyer_command_input = input("")
             check_to_command = plyer_command_input.isdigit()
             print(check_to_command) 
-        
+            
     
     if plyer_command_input == 1:
+        plyer_command_input = -1
         while player_c.get_HP() > 0 and test_enemy.get_HP() > 0:
             screen_clear()
             print("플레이어 hp:",player_c.get_HP())
             print("적 hp:", test_enemy.get_HP())
             fight()
-        if player_c.get_HP() < 0:
-            print("Player Lose")
-        elif test_enemy.get_HP() < 0:
-            print("Player Lose")
-    else:
+            #####전투 후 hp초기화#####
+            if player_c.get_HP() >= 0:
+                print("Player win")
+                Enemy_HP = test_enemy.get_HP()
+                Player_HP = player_c.get_HP()
+                continue
+            elif test_enemy.get_HP() >= 0:
+                print("Player Lose")
+                Enemy_HP = test_enemy.get_HP()
+                Player_HP = player_c.get_HP()
+                continue
+            ########################
+    else: #지정된 값이 아니면 다시 인풋값 받음
         screen_clear()
-        print("올바른 값을 입력해주세요")
-        time.sleep(1)
+        # time.sleep(0.5)
         screen_clear
+        print("원하는 행동을 선택해주세요")
         print("0. 게임 종료")
         print("1. 전투")
         plyer_command_input = input("")
