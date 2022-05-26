@@ -1,3 +1,5 @@
+#ver.Y2022M05D26h19m27
+
 import random
 import time
 import os
